@@ -1,0 +1,419 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Inter, sans-serif;
+}
+
+body{
+background:#0f172a;
+color:white;
+}
+
+/* Page layout */
+
+.chat-page{
+width:100%;
+height:100vh;
+display:flex;
+justify-content:center;
+}
+
+/* Main container */
+
+.chat-container{
+width:100%;
+max-width:900px;
+height:100vh;
+display:flex;
+flex-direction:column;
+}
+
+/* Header */
+
+.chat-header{
+padding:20px;
+border-radius: 2vw;
+border-bottom:1px solid #334155;
+background: white/ 2px;;
+font-size:20px;
+font-weight:600;
+
+h2{
+    color:#022ea6;
+}
+}
+
+/* Messages */
+
+.chat-messages{
+flex:1;
+overflow-y:auto;
+padding:30px;
+display:flex;
+flex-direction:column;
+gap:16px;
+}
+
+/* Message bubbles */
+
+.msg{
+padding:14px 16px;
+border-radius:10px;
+max-width:60%;
+line-height:1.5;
+font-size:15px;
+}
+
+/* User */
+
+.msg.user{
+background:#08183b;
+margin-left:auto;
+}
+
+/* AI */
+
+.msg.ai{
+background:b#03183a;
+}
+
+/* Thinking */
+
+.thinking{
+opacity:0.7;
+font-style:italic;
+}
+
+/* Input area */
+
+.chat-input{
+display:flex;
+padding:20px;
+border-top:1px solid #334155;
+gap:12px;
+background: white/ 2px;;
+border-radius: 2vw;
+}
+
+/* Input */
+
+.chat-input input{
+flex:1;
+padding:14px;
+border-radius:10px;
+border:none;
+background:#0f172a;
+color:white;
+font-size:15px;
+}
+
+/* Button */
+
+.chat-input button{
+padding:14px 20px;
+background:#2563eb;
+border:none;
+border-radius:10px;
+color:white;
+cursor:pointer;
+font-size:15px;
+}
+
+.chat-input button:hover{
+background:#1d4ed8;
+}
+
+::-webkit-scrollbar{
+width:8px;
+}
+
+
+.code-wrapper{
+margin-top:10px;
+}
+
+.code-block{
+background:#020617;
+padding:15px;
+border-radius:8px;
+overflow:auto;
+font-family:monospace;
+}
+
+.run-btn{
+margin-top:8px;
+padding:8px 14px;
+background:#2563eb;
+border:none;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+
+.code-output{
+margin-top:10px;
+background:#020617;
+padding:12px;
+border-radius:6px;
+color:#22c55e;
+font-family:monospace;
+}
+
+/* ── Thinking dots animation ───────────────────────────── */
+.dot-flashing {
+  display: inline-block;
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #aaa;
+  animation: dotFlashing 1s infinite alternate;
+  animation-delay: 0.3s;
+}
+
+.dot-flashing::before,
+.dot-flashing::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #aaa;
+}
+
+.dot-flashing::before {
+  left: -14px;
+  animation: dotFlashing 1s infinite alternate;
+  animation-delay: 0s;
+}
+
+.dot-flashing::after {
+  left: 14px;
+  animation: dotFlashing 1s infinite alternate;
+  animation-delay: 0.6s;
+}
+
+@keyframes dotFlashing {
+  0%   { background-color: #aaa; }
+  100% { background-color: #eee; }
+}
+
+/* ── CodeCompiler ───────────────────────────────────────────────────────────── */
+
+.compiler {
+  margin-top: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #333;
+  background: #1e1e1e;
+  font-family: "Fira Code", "Cascadia Code", monospace;
+}
+
+/* Toolbar */
+.compiler-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #2a2a2a;
+  border-bottom: 1px solid #333;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.compiler-lang-select {
+  background: #1e1e1e;
+  color: #ccc;
+  border: 1px solid #444;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  outline: none;
+}
+
+.compiler-lang-select:focus {
+  border-color: #666;
+}
+
+.compiler-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Buttons */
+.compiler-btn {
+  padding: 5px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+.compiler-btn:active {
+  transform: scale(0.96);
+}
+
+.compiler-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.copy-btn {
+  background: #2e2e2e;
+  color: #aaa;
+  border-color: #444;
+}
+
+.copy-btn:hover:not(:disabled) {
+  background: #3a3a3a;
+  color: #eee;
+}
+
+.clear-btn {
+  background: #2e2e2e;
+  color: #e07070;
+  border-color: #553333;
+}
+
+.clear-btn:hover:not(:disabled) {
+  background: #3a2a2a;
+}
+
+.run-btn {
+  background: #1a6e3c;
+  color: #7ef7b0;
+  border-color: #2a8a50;
+  font-weight: 500;
+}
+
+.run-btn:hover:not(:disabled) {
+  background: #1e8044;
+}
+
+/* Editor area */
+.compiler-editor {
+  position: relative;
+  min-height: 160px;
+}
+
+.compiler-textarea {
+  width: 100%;
+  min-height: 160px;
+  padding: 14px 16px;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  border: none;
+  outline: none;
+  resize: vertical;
+  font-family: "Fira Code", "Cascadia Code", "Courier New", monospace;
+  font-size: 13.5px;
+  line-height: 1.6;
+  tab-size: 2;
+  white-space: pre;
+  overflow-x: auto;
+  box-sizing: border-box;
+}
+
+.compiler-textarea::placeholder {
+  color: #555;
+}
+
+/* Output panel */
+.compiler-output {
+  border-top: 1px solid #333;
+  background: #161616;
+}
+
+.compiler-output-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 14px;
+  background: #222;
+  border-bottom: 1px solid #333;
+  font-size: 12px;
+  color: #888;
+}
+
+.exit-badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.exit-ok {
+  background: #1a3d26;
+  color: #6ee09a;
+}
+
+.exit-err {
+  background: #3d1a1a;
+  color: #e07070;
+}
+
+.compiler-output-text {
+  margin: 0;
+  padding: 12px 16px;
+  font-family: "Fira Code", "Cascadia Code", monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #d4d4d4;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.compiler-output-error {
+  color: #e07070;
+}
+
+.compiler-output-empty {
+  color: #555;
+  font-style: italic;
+}
+
+/* Thinking dots (if not already in your CSS) */
+.dot-flashing {
+  display: inline-block;
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #aaa;
+  animation: dotFlashing 1s infinite alternate;
+  animation-delay: 0.3s;
+}
+
+.dot-flashing::before,
+.dot-flashing::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #aaa;
+}
+
+.dot-flashing::before {
+  left: -14px;
+  animation: dotFlashing 1s infinite alternate;
+  animation-delay: 0s;
+}
+
+.dot-flashing::after {
+  left: 14px;
+  animation: dotFlashing 1s infinite alternate;
+  animation-delay: 0.6s;
+}
+
+@keyframes dotFlashing {
+  0%   { background-color: #aaa; }
+  100% { background-color: #444; }
+}
