@@ -6,8 +6,8 @@ import CodeCompiler from "./CodeBlock";
 import TypingText from "../utils/TypingText";
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const API_URL    = "https://genai-backend-wnqt.onrender.com/ask";
-const TYPING_SPEED = 18;
+const API_URL    = import.meta.env.VITE_API_URL;
+const TYPING_SPEED = import.meta.env.VITE_TYPING_SPEED;
 
 // ─── Helper ───────────────────────────────────────────────────────────────────
 
